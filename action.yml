@@ -4,6 +4,10 @@
 name: 'setup-awscli'
 description: 'Set up aws-cli v2 in linux job'
 
+branding:
+  icon: 'box'  
+  color: 'orange'
+
 inputs:
   install-dir:
     required: false
