@@ -1,0 +1,38 @@
+name: Test
+
+on:
+  # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#push
+  push:
+    branches:
+      - 'main'
+
+  # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      install-dir:
+        required: false
+        type: string
+        default: '/usr/local/aws-cli'
+      bin-dir:
+        required: false
+        type: string
+        default: '/usr/local/bin'
+      gpg-verify:
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  try:
+    name: try
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup aws-cli
+        uses: ./
+        with:
+          install-dir: ${{ github.event.inputs.install-dir }}
+          bin-dir: ${{ github.event.inputs.bin-dir }}
+          gpg-verify: ${{ github.event.inputs.gpg-verify }}
